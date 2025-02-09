@@ -1,12 +1,11 @@
-// vars/generateAcquiaAccessToken.groovy
+// vars/generateAccessToken.groovy
 
-def call() {
+def call(String credentialsId, String tokenUrl) {
 
     // Use Jenkins credentials binding to access the stored credentials
-    withCredentials([usernamePassword(credentialsId: 'acquia-cloud-auth', 
+    withCredentials([usernamePassword(credentialsId: credentialsId, 
                                       usernameVariable: 'CLIENT_ID', 
                                       passwordVariable: 'CLIENT_SECRET')]) {
-        def tokenUrl = 'https://accounts.acquia.com/api/auth/oauth/token'
         def connection = new URL(tokenUrl).openConnection()
         connection.setRequestMethod('POST')
         connection.setDoOutput(true)
