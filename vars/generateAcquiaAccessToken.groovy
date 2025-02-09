@@ -1,7 +1,6 @@
-// vars/generateAccessToken.groovy
+// vars/generateAcquiaAccessToken.groovy
 
 def call() {
-    import groovy.json.JsonSlurper
 
     // Use Jenkins credentials binding to access the stored credentials
     withCredentials([usernamePassword(credentialsId: 'acquia-cloud-auth', 
@@ -16,7 +15,7 @@ def call() {
         def postData = "grant_type=client_credentials&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}"
         connection.outputStream.write(postData.getBytes("UTF-8"))
         def response = connection.inputStream.text
-        def jsonResponse = new JsonSlurper().parseText(response)
+        def jsonResponse = new groovy.json.JsonSlurper().parseText(response)
 
         return jsonResponse.access_token
     }
